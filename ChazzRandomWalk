@@ -1,0 +1,59 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace RandomWalk
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            int stepping = 0; //We need a variable for the actual act of stepping to track the random (I think? Will comment out if it becomes unneccessary...).
+            int xCoord = 0; //Let's get some variables for X and Y position, as well as the totals we will need when it comes time to average.
+            int yCoord = 0;
+            double xTotal = 0; //These are probably going to see some division, let's get some doubles just in case we get a lot of decimal points.
+            double yTotal = 0;
+            double xAverage = 0;
+            double yAverage = 0;
+            int currentSteps = 0; //Better count the number of steps taken.
+            int totalSteps = 0;
+            int timesRun = 0; //We also need to keep track of how many times the sim runs so we can finish the program.
+            int finish = 1; //I don't know how bools work in C# and don't want to research it so let's go old fashioned here.
+
+            Console.WriteLine("How many steps would you like this adventure to go on for?\n"); //Ask the user for input of course.
+            Random randomWalk = new Random(); //Better get a Random ready!
+            totalSteps = Convert.ToInt32(Console.ReadLine()); //Now they can give us a number of steps.
+            Console.WriteLine("Your journey will last {0} steps. Excelsior!\n", totalSteps); //Might as well let the user know we got their number. Also, excuse to say Excelsior!
+            Console.ReadLine(); //Brief pause...
+            while (finish != 0)
+            {
+                for(currentSteps = 0; currentSteps < totalSteps; currentSteps++)
+                {
+                    stepping = randomWalk.Next(0, 4); //Let's keep this simple.
+                    if (stepping == 1) //I have no idea if this makes decimals? Let's account for the possibility...UPDATE: Nope, it just wants == not <= since stepping is an int.
+                        xCoord++;
+                    else if (stepping == 2)
+                        xCoord--; //You can -- right? Let's see if the compiler throws a fit. UPDATE: worked!
+                    else if (stepping == 3)
+                        yCoord++;
+                    else if (stepping == 4)
+                        yCoord--;
+                    xTotal += xCoord; //Need to add the x/y positions to the totals so we can average them out.
+                    yTotal += yCoord;
+                    timesRun++; //Better keep track of how many times this runs...
+                    if (timesRun == 100)
+                        finish = 0; //...so we can make it run 100 times and then stop.
+
+                }
+            }
+            //Now the while loop has finished, better calculate those averages!
+            xAverage = xTotal / 100;
+            yAverage = yTotal / 100;
+            Console.WriteLine("What a long strange trip it's been... My most common position was {0},{1}.\n", xAverage, yAverage); //Let's report that average!
+            Console.ReadLine(); //Obligatory ReadLine to keep box from an-heroing...
+
+        }
+    }
+}
