@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace ClassTypesHW
+{
+    class Program //I know there is such a thing as "excessive commenting" but making comments is the only thing that keeps me from crying little code snippets and this is not real code so buckle your seatbelt.
+    { 
+       static void Main(string[] args)
+        {
+            int hoursWorked = 0;
+
+            SalariedWorker salaried = new SalariedWorker();
+            Console.WriteLine("Enter the name of your Salaried Worker: \n");  
+            salaried.name = Convert.ToString(Console.ReadLine());
+
+            HourlyWorker hourly = new HourlyWorker();
+            Console.WriteLine("Enter the name of your Hourly Worker: \n");
+            hourly.name = Convert.ToString(Console.ReadLine());
+
+            double hourlyTotal = 0; 
+            double salariedTotal = 0; 
+            
+            while (salariedTotal >= hourlyTotal)
+            {
+                hoursWorked++;
+                hourlyTotal = (hourly.hourlyPay * hoursWorked); //Why are these broken? UPDATE: I am dumb
+                salariedTotal = (salaried.basePay + (salaried.hourlyPay * hoursWorked)); //I AM DOING THIS RIGHT HATEFUL CODE GOD! UPDATE: Thanks, CodeGetch!
+            }
+            
+            Console.WriteLine("After {0} hours, the salaried worker {1} will have made {2} and the hourly worker {3} will also have made {2}. Algebraic!", hoursWorked, salaried.name, salariedTotal, hourly.name, hourlyTotal);
+            Console.ReadLine();
+        }
+    } //Pardon our whitespace, it is for organization purposes.
+
+    public abstract class Person
+    {
+        public string name = "Whocares"; //Name and age... wonder what those will do?
+        public int age = 4;
+    }
+    
+    public class SalariedWorker : Person
+    {
+        public double basePay = 1000.00; //CodeMonkey says: These variables can easily be changed to affect results!
+        public double hourlyPay = 4.00;
+        
+    }
+    
+    public class HourlyWorker : Person
+    {
+        public double hourlyPay = 11.50; //Same for this one!
+    }
+}
